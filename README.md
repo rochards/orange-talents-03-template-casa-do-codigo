@@ -1,3 +1,7 @@
-# Por favor faça um Fork desse projeto!
+# Desafio Casa do Código
 
-## Está em dúvida de como fazer um Fork? Não tem problema! [Aqui tem uma explicação do que entendemos que você deve considerar!](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo)
+### Entidades do sistema
+- Autor;
+
+### Funcionalidades disponíveis
+- Cadastro de autor;
