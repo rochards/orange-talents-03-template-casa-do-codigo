@@ -1,40 +1,36 @@
 package br.com.zupacademy.rodrigo.casadocodigo.exception.validation;
 
-import br.com.zupacademy.rodrigo.casadocodigo.repository.AutorRepository;
-import br.com.zupacademy.rodrigo.casadocodigo.repository.CategoriaRepository;
+import org.springframework.util.Assert;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.List;
 
-public class NotDuplicateValidator implements ConstraintValidator<NotDuplicate, String> {
+public class NotDuplicateValidator implements ConstraintValidator<NotDuplicate, Object> {
 
-    private CheckField checkField;
-
-    private final AutorRepository autorRepository;
-    private final CategoriaRepository categoriaRepository;
-
-    public NotDuplicateValidator(AutorRepository autorRepository, CategoriaRepository categoriaRepository) {
-        this.autorRepository = autorRepository;
-        this.categoriaRepository = categoriaRepository;
-    }
+    private String domainAttribute;
+    private Class<?> clazz;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void initialize(NotDuplicate constraintAnnotation) {
-        this.checkField = constraintAnnotation.value();
+        this.domainAttribute = constraintAnnotation.fieldName();
+        this.clazz = constraintAnnotation.domainClass();
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return true;
-        }
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
 
-        if (CheckField.EMAIL_AUTOR == checkField) {
-            var optAutor = autorRepository.findByEmail(value);
-            return optAutor.isEmpty();
-        } else {
-            var optCategoria = categoriaRepository.findByNome(value);
-            return optCategoria.isEmpty();
-        }
+        Query query = entityManager.createQuery(String.format("SELECT 1 FROM %s WHERE %s=:field", clazz.getName(), domainAttribute));
+        query.setParameter("field", value);
+        List<?> resultList = query.getResultList();
+        Assert.state(resultList.size() <= 1, String.format("Foi encontrado mais de um %s com o atributo %s",
+                clazz.getName(), domainAttribute));
+
+        return resultList.isEmpty();
     }
 }

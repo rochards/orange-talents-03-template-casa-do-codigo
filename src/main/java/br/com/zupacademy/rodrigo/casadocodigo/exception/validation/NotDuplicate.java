@@ -2,7 +2,6 @@ package br.com.zupacademy.rodrigo.casadocodigo.exception.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.constraints.NotBlank;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -22,7 +21,9 @@ public @interface NotDuplicate {
 
     Class<? extends Payload>[] payload() default {};
 
-    CheckField value();
+    Class<?> domainClass();
+
+    String fieldName();
 
     @Documented
     @Target({FIELD, METHOD, PARAMETER, ANNOTATION_TYPE})

@@ -7,15 +7,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import static br.com.zupacademy.rodrigo.casadocodigo.exception.validation.CheckField.EMAIL_AUTOR;
-
 public class AutorRequestDTO {
 
     @NotBlank
     private String nome;
 
     @NotBlank @Email
-    @NotDuplicate(message = "esse email já está cadastrado", value = EMAIL_AUTOR)
+    @NotDuplicate(message = "esse email já está cadastrado", fieldName = "email", domainClass = Autor.class)
     private String email;
 
     @NotBlank @Size(max = 400)

@@ -5,12 +5,10 @@ import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.NotDuplicate;
 
 import javax.validation.constraints.NotBlank;
 
-import static br.com.zupacademy.rodrigo.casadocodigo.exception.validation.CheckField.NOME_CATEGORIA;
-
 public class CategoriaRequestDTO {
 
     @NotBlank
-    @NotDuplicate(message = "esse nome já está cadastrado", value = NOME_CATEGORIA)
+    @NotDuplicate(message = "esse nome já está cadastrado", fieldName = "nome", domainClass = Categoria.class)
     private String nome;
 
     public Categoria toModel() {
