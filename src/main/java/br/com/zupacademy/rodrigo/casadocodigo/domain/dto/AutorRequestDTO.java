@@ -1,10 +1,13 @@
 package br.com.zupacademy.rodrigo.casadocodigo.domain.dto;
 
 import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Autor;
+import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.NotDuplicate;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import static br.com.zupacademy.rodrigo.casadocodigo.exception.validation.CheckField.EMAIL_AUTOR;
 
 public class AutorRequestDTO {
 
@@ -12,6 +15,7 @@ public class AutorRequestDTO {
     private String nome;
 
     @NotBlank @Email
+    @NotDuplicate(message = "esse email já está cadastrado", value = EMAIL_AUTOR)
     private String email;
 
     @NotBlank @Size(max = 400)
