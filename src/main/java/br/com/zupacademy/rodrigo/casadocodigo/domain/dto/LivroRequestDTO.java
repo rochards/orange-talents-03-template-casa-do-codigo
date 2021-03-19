@@ -74,40 +74,4 @@ public class LivroRequestDTO {
 
         return new Livro(titulo, resumo, sumario, preco, numeroDePaginas, isbn, dataLancamento, categoria, autor);
     }
-
-    /*public void setAutorId(Integer autorId) {
-        this.autorId = autorId;
-    }
-
-    public void setCategoriaId(Integer categoriaId) {
-        this.categoriaId = categoriaId;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public void setResumo(String resumo) {
-        this.resumo = resumo;
-    }
-
-    public void setSumario(String sumario) {
-        this.sumario = sumario;
-    }
-
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
-
-    public void setNumeroDePaginas(Integer numeroDePaginas) {
-        this.numeroDePaginas = numeroDePaginas;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public void setDataLancamento(LocalDate dataLancamento) {
-        this.dataLancamento = dataLancamento;
-    }*/
 }
