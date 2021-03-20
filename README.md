@@ -9,3 +9,4 @@
 - Cadastro de autor;
 - Cadastro de categoria;
 - Cadastro de livro;
+- Listagem de livros;
