@@ -7,13 +7,9 @@ public class ListaLivroResponseDTO {
     private Integer id;
     private String nome;
 
-    private ListaLivroResponseDTO(Integer id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public static ListaLivroResponseDTO toDTO(Livro livro) {
-        return new ListaLivroResponseDTO(livro.getId(), livro.getTitulo());
+    public ListaLivroResponseDTO(Livro livro) {
+        this.id = livro.getId();
+        this.nome = livro.getTitulo();
     }
 
     public Integer getId() {

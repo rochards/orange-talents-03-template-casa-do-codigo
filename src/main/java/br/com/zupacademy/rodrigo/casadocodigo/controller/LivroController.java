@@ -42,13 +42,15 @@ public class LivroController {
     @GetMapping
     public ResponseEntity<Page<ListaLivroResponseDTO>> listaTodos(Pageable pageable) {
         var livrosPage = livroRepository.findAll(pageable);
-        var listaLivrosPage = livrosPage.map(ListaLivroResponseDTO::toDTO);
+
+        var listaLivrosPage = livrosPage.map(ListaLivroResponseDTO::new);
         return ResponseEntity.ok(listaLivrosPage);
     }
 
     @GetMapping("{livroId}")
     public ResponseEntity<DetalheLivroResponseDTO> buscaDetalhes(@PathVariable Integer livroId) {
         var optLivro = livroRepository.findById(livroId);
+
         return optLivro.map(livro -> ResponseEntity.ok(DetalheLivroResponseDTO.toDTO(livro)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
