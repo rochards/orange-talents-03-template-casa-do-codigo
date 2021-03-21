@@ -1,9 +1,9 @@
 package br.com.zupacademy.rodrigo.casadocodigo.controller;
 
+import br.com.zupacademy.rodrigo.casadocodigo.domain.dto.DetalheLivroResponseDTO;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.dto.ListaLivroResponseDTO;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.dto.LivroRequestDTO;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.dto.LivroResponseDTO;
-import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.NotDuplicate;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.AutorRepository;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.CategoriaRepository;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.LivroRepository;
@@ -44,5 +44,12 @@ public class LivroController {
         var livrosPage = livroRepository.findAll(pageable);
         var listaLivrosPage = livrosPage.map(ListaLivroResponseDTO::toDTO);
         return ResponseEntity.ok(listaLivrosPage);
+    }
+
+    @GetMapping("{livroId}")
+    public ResponseEntity<DetalheLivroResponseDTO> buscaDetalhes(@PathVariable Integer livroId) {
+        var optLivro = livroRepository.findById(livroId);
+        return optLivro.map(livro -> ResponseEntity.ok(DetalheLivroResponseDTO.toDTO(livro)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
