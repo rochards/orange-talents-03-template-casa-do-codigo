@@ -12,17 +12,12 @@ public class AutorResponseDTO {
     private String descricao;
     private OffsetDateTime dataCadastro;
 
-    private AutorResponseDTO(Integer id, String nome, String email, String descricao, OffsetDateTime dataCadastro) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.descricao = descricao;
-        this.dataCadastro = dataCadastro;
-    }
-
-    public static AutorResponseDTO toDTO(Autor autor) {
-        return new AutorResponseDTO(autor.getId(), autor.getNome(), autor.getEmail(), autor.getDescricao(),
-                autor.getDataCadastro());
+    public AutorResponseDTO(Autor autor) {
+        this.id = autor.getId();
+        this.nome = autor.getNome();
+        this.email = autor.getEmail();
+        this.descricao = autor.getDescricao();
+        this.dataCadastro = autor.getDataCadastro();
     }
 
     public Integer getId() {

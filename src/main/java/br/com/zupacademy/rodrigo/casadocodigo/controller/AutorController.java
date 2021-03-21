@@ -27,6 +27,6 @@ public class AutorController {
 
         autor = autorRepository.save(autor);
 
-        return ResponseEntity.ok(AutorResponseDTO.toDTO(autor));
+        return ResponseEntity.ok(new AutorResponseDTO(autor));
     }
 }
