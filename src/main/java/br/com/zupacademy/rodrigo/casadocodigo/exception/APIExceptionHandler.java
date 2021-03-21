@@ -1,5 +1,6 @@
 package br.com.zupacademy.rodrigo.casadocodigo.exception;
 
+import br.com.zupacademy.rodrigo.casadocodigo.exception.type.DuplicateRegisterException;
 import br.com.zupacademy.rodrigo.casadocodigo.exception.type.RegisterNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -25,6 +26,14 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RegisterNotFoundException.class)
     public ResponseEntity<Object> handleRegisterNotFoundException(RegisterNotFoundException ex) {
+        var exceptionMessage = new ExceptionMessage();
+        exceptionMessage.getErrors().add(new FieldErrorMessage(ex.getFieldName(), ex.getMessage()));
+
+        return new ResponseEntity<>(exceptionMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicateRegisterException.class)
+    public ResponseEntity<Object> handleDuplicateRegisterException(DuplicateRegisterException ex) {
         var exceptionMessage = new ExceptionMessage();
         exceptionMessage.getErrors().add(new FieldErrorMessage(ex.getFieldName(), ex.getMessage()));
 

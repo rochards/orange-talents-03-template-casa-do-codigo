@@ -5,6 +5,7 @@
 - Categoria;
 - Livro;
 - País;
+- Estado;
 
 ### Funcionalidades disponíveis
 - Cadastro de autor;
@@ -13,3 +14,4 @@
 - Listagem de livros;
 - Busca de livro por id;
 - Cadastro de país;
+- Cadastro de estado;
