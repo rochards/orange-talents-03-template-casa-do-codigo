@@ -27,6 +27,6 @@ public class CategoriaController {
 
         categoria = categoriaRepository.save(categoria);
 
-        return ResponseEntity.ok(CategoriaResponseDTO.toDTO(categoria));
+        return ResponseEntity.ok(new CategoriaResponseDTO(categoria));
     }
 }

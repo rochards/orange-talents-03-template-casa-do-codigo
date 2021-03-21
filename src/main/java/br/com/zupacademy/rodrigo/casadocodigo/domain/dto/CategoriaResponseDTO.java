@@ -7,13 +7,9 @@ public class CategoriaResponseDTO {
     private Integer id;
     private String nome;
 
-    private CategoriaResponseDTO(Integer id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public static CategoriaResponseDTO toDTO(Categoria categoria) {
-        return new CategoriaResponseDTO(categoria.getId(), categoria.getNome());
+    public CategoriaResponseDTO(Categoria categoria) {
+        this.id = categoria.getId();
+        this.nome = categoria.getNome();
     }
 
     public Integer getId() {
