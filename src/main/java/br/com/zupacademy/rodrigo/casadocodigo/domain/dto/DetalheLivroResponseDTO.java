@@ -1,5 +1,6 @@
 package br.com.zupacademy.rodrigo.casadocodigo.domain.dto;
 
+import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Autor;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Livro;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -17,7 +18,7 @@ public class DetalheLivroResponseDTO {
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataLancamento;
-    private AutorDTO autor;
+    private DetalheAutorLivroResponseDTO autor;
 
     public DetalheLivroResponseDTO(Livro livro) {
 
@@ -28,7 +29,7 @@ public class DetalheLivroResponseDTO {
         this.numeroDePaginas = livro.getNumeroDePaginas();
         this.isbn = livro.getIsbn();
         this.dataLancamento = livro.getDataLancamento();
-        this.autor = new AutorDTO(livro.getAutor().getNome(), livro.getAutor().getDescricao());
+        this.autor = new DetalheAutorLivroResponseDTO(livro.getAutor());
     }
 
     public String getTitulo() {
@@ -59,26 +60,7 @@ public class DetalheLivroResponseDTO {
         return dataLancamento;
     }
 
-    public AutorDTO getAutor() {
+    public DetalheAutorLivroResponseDTO getAutor() {
         return autor;
-    }
-}
-
-class AutorDTO {
-
-    private String nome;
-    private String descricao;
-
-    public AutorDTO(String nome, String descricao) {
-        this.nome = nome;
-        this.descricao = descricao;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
     }
 }
