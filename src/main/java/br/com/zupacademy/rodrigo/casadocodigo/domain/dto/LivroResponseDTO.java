@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
-
 public class LivroResponseDTO {
 
     private String nomeAutor;
@@ -22,24 +20,17 @@ public class LivroResponseDTO {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataLancamento;
 
-    private LivroResponseDTO(String nomeAutor, String nomeCategoria, String titulo, String resumo, String sumario,
-        BigDecimal preco, Integer numeroDePaginas, String isbn, LocalDate dataLancamento) {
+    public LivroResponseDTO(Livro livro) {
 
-        this.nomeAutor = nomeAutor;
-        this.nomeCategoria = nomeCategoria;
-        this.titulo = titulo;
-        this.resumo = resumo;
-        this.sumario = sumario;
-        this.preco = preco;
-        this.numeroDePaginas = numeroDePaginas;
-        this.isbn = isbn;
-        this.dataLancamento = dataLancamento;
-    }
-
-    public static LivroResponseDTO toDTO(Livro livro) {
-        return new LivroResponseDTO(livro.getAutor().getNome(), livro.getCategoria().getNome(), livro.getTitulo(),
-                livro.getResumo(), livro.getSumario(), livro.getPreco(), livro.getNumeroDePaginas(), livro.getIsbn(),
-                livro.getDataLancamento());
+        this.nomeAutor = livro.getAutor().getNome();
+        this.nomeCategoria = livro.getCategoria().getNome();
+        this.titulo = livro.getTitulo();
+        this.resumo = livro.getResumo();
+        this.sumario = livro.getSumario();
+        this.preco = livro.getPreco();
+        this.numeroDePaginas = livro.getNumeroDePaginas();
+        this.isbn = livro.getIsbn();
+        this.dataLancamento = livro.getDataLancamento();
     }
 
     public String getNomeAutor() {

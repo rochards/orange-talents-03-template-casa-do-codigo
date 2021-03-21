@@ -36,7 +36,7 @@ public class LivroController {
 
         livro = livroRepository.save(livro);
 
-        return ResponseEntity.ok(LivroResponseDTO.toDTO(livro));
+        return ResponseEntity.ok(new LivroResponseDTO(livro));
     }
 
     @GetMapping
