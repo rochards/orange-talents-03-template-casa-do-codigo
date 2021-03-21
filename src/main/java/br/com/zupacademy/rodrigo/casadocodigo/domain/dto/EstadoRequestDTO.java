@@ -27,15 +27,12 @@ public class EstadoRequestDTO {
                 .orElseThrow(() -> new RegisterNotFoundException("paisId", String.format("não há " +
                         "registro de país com id '%d'", paisId)));
 
-        var optEstado = estadoRepository.findByNome(nome);
+        var optEstado = estadoRepository.findByNomeAndPaisId(nome, paisId);
         if (optEstado.isPresent()) {
-            var estado = optEstado.get();
-            if (paisId.equals(estado.getPais().getId())) {
-                throw new DuplicateRegisterException("nome", String.format("já há um estado '%s' para o país com id " +
-                        "'%d'", nome, paisId));
-            }
+            throw new DuplicateRegisterException("nome", String.format("já há um estado '%s' para o país com id " +
+                    "'%d'", nome, paisId));
         }
-
+        
         return new Estado(nome, pais);
     }
 }
