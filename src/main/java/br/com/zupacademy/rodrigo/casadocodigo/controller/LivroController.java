@@ -51,7 +51,7 @@ public class LivroController {
     public ResponseEntity<DetalheLivroResponseDTO> buscaDetalhes(@PathVariable Integer livroId) {
         var optLivro = livroRepository.findById(livroId);
 
-        return optLivro.map(livro -> ResponseEntity.ok(DetalheLivroResponseDTO.toDTO(livro)))
+        return optLivro.map(livro -> ResponseEntity.ok(new DetalheLivroResponseDTO(livro)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

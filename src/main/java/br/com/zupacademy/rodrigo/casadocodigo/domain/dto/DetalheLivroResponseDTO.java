@@ -19,25 +19,17 @@ public class DetalheLivroResponseDTO {
     private LocalDate dataLancamento;
     private AutorDTO autor;
 
-    public DetalheLivroResponseDTO(String titulo, String resumo, String sumario, BigDecimal preco, Integer numeroDePaginas,
-        String isbn, LocalDate dataLancamento, AutorDTO autor) {
+    public DetalheLivroResponseDTO(Livro livro) {
 
-        this.titulo = titulo;
-        this.resumo = resumo;
-        this.sumario = sumario;
-        this.preco = preco;
-        this.numeroDePaginas = numeroDePaginas;
-        this.isbn = isbn;
-        this.dataLancamento = dataLancamento;
-        this.autor = autor;
+        this.titulo = livro.getTitulo();
+        this.resumo = livro.getResumo();
+        this.sumario = livro.getSumario();
+        this.preco = livro.getPreco();
+        this.numeroDePaginas = livro.getNumeroDePaginas();
+        this.isbn = livro.getIsbn();
+        this.dataLancamento = livro.getDataLancamento();
+        this.autor = new AutorDTO(livro.getAutor().getNome(), livro.getAutor().getDescricao());
     }
-
-    public static DetalheLivroResponseDTO toDTO(Livro livro) {
-        var autor = new AutorDTO(livro.getAutor().getNome(), livro.getAutor().getDescricao());
-        return new DetalheLivroResponseDTO(livro.getTitulo(), livro.getResumo(), livro.getSumario(), livro.getPreco(),
-                livro.getNumeroDePaginas(), livro.getIsbn(), livro.getDataLancamento(), autor);
-    }
-
 
     public String getTitulo() {
         return titulo;
