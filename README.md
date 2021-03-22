@@ -6,6 +6,7 @@
 - Livro;
 - País;
 - Estado;
+- Cliente;
 
 ### Funcionalidades disponíveis
 - Cadastro de autor;
@@ -15,3 +16,4 @@
 - Busca de livro por id;
 - Cadastro de país;
 - Cadastro de estado;
+- Cadastro de cliente;
