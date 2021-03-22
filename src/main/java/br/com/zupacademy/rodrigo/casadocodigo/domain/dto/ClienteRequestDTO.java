@@ -85,7 +85,15 @@ public class ClienteRequestDTO {
             var optEstado = estadoRepository.findById(estadoId);
             return optEstado.orElse(null);
         }
-        
+
         return null;
+    }
+
+    public Integer getPaisId() {
+        return paisId;
+    }
+
+    public Integer getEstadoId() {
+        return estadoId;
     }
 }
