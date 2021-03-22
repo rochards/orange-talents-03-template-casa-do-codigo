@@ -1,8 +1,10 @@
 package br.com.zupacademy.rodrigo.casadocodigo.domain.dto;
 
 import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Estado;
+import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Pais;
 import br.com.zupacademy.rodrigo.casadocodigo.exception.type.DuplicateRegisterException;
 import br.com.zupacademy.rodrigo.casadocodigo.exception.type.RegisterNotFoundException;
+import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.ExistsIdentifier;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.EstadoRepository;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.PaisRepository;
 
@@ -12,6 +14,7 @@ import javax.validation.constraints.NotNull;
 public class EstadoRequestDTO {
 
     @NotNull
+    @ExistsIdentifier(message = "não há registro de país com esse id", fieldName = "id", domainClass = Pais.class)
     private Integer paisId;
 
     @NotBlank
@@ -23,9 +26,7 @@ public class EstadoRequestDTO {
     }
 
     public Estado toModel(PaisRepository paisRepository, EstadoRepository estadoRepository) {
-        var pais = paisRepository.findById(paisId)
-                .orElseThrow(() -> new RegisterNotFoundException("paisId", String.format("não há " +
-                        "registro de país com id '%d'", paisId)));
+        var pais = buscaPais(paisRepository);
 
         var optEstado = estadoRepository.findByNomeAndPaisId(nome, paisId);
         if (optEstado.isPresent()) {
@@ -34,5 +35,9 @@ public class EstadoRequestDTO {
         }
         
         return new Estado(nome, pais);
+    }
+
+    private Pais buscaPais(PaisRepository paisRepository) {
+        return paisRepository.findById(paisId).get();
     }
 }
