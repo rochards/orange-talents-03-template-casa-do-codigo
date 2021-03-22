@@ -2,13 +2,12 @@ package br.com.zupacademy.rodrigo.casadocodigo.controller;
 
 import br.com.zupacademy.rodrigo.casadocodigo.domain.dto.EstadoRequestDTO;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.dto.EstadoResponseDTO;
+import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.UniqueEstadoPaisValidator;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.EstadoRepository;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.PaisRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -18,10 +17,18 @@ public class EstadoController {
 
     private final EstadoRepository estadoRepository;
     private final PaisRepository paisRepository;
+    private final UniqueEstadoPaisValidator estadoPaisValidator;
 
-    public EstadoController(EstadoRepository estadoRepository, PaisRepository paisRepository) {
+    public EstadoController(EstadoRepository estadoRepository, PaisRepository paisRepository,
+        UniqueEstadoPaisValidator estadoPaisValidator) {
         this.estadoRepository = estadoRepository;
         this.paisRepository = paisRepository;
+        this.estadoPaisValidator = estadoPaisValidator;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(estadoPaisValidator);
     }
 
     @PostMapping

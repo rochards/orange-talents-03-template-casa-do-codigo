@@ -3,7 +3,6 @@ package br.com.zupacademy.rodrigo.casadocodigo.domain.dto;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Estado;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Pais;
 import br.com.zupacademy.rodrigo.casadocodigo.exception.type.DuplicateRegisterException;
-import br.com.zupacademy.rodrigo.casadocodigo.exception.type.RegisterNotFoundException;
 import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.ExistsIdentifier;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.EstadoRepository;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.PaisRepository;
@@ -28,16 +27,18 @@ public class EstadoRequestDTO {
     public Estado toModel(PaisRepository paisRepository, EstadoRepository estadoRepository) {
         var pais = buscaPais(paisRepository);
 
-        var optEstado = estadoRepository.findByNomeAndPaisId(nome, paisId);
-        if (optEstado.isPresent()) {
-            throw new DuplicateRegisterException("nome", String.format("já há um estado '%s' para o país com id " +
-                    "'%d'", nome, paisId));
-        }
-        
         return new Estado(nome, pais);
     }
 
     private Pais buscaPais(PaisRepository paisRepository) {
         return paisRepository.findById(paisId).get();
+    }
+
+    public Integer getPaisId() {
+        return paisId;
+    }
+
+    public String getNome() {
+        return nome;
     }
 }
