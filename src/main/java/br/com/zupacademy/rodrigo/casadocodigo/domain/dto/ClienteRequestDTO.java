@@ -3,6 +3,7 @@ package br.com.zupacademy.rodrigo.casadocodigo.domain.dto;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Cliente;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Estado;
 import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Pais;
+import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.CpfOrCnpj;
 import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.ExistsIdentifier;
 import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.NotDuplicate;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.EstadoRepository;
@@ -11,8 +12,6 @@ import br.com.zupacademy.rodrigo.casadocodigo.repository.PaisRepository;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
-import java.util.Optional;
 
 public class ClienteRequestDTO {
 
@@ -26,7 +25,7 @@ public class ClienteRequestDTO {
     @NotBlank
     private String sobreNome;
 
-    @NotBlank
+    @NotBlank @CpfOrCnpj
     @NotDuplicate(message = "esse documento já está cadastrado", fieldName = "documento", domainClass = Cliente.class)
     private String documento;
 
