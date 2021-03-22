@@ -1,7 +1,8 @@
 package br.com.zupacademy.rodrigo.casadocodigo.domain.dto;
 
-import br.com.zupacademy.rodrigo.casadocodigo.domain.model.Livro;
+import br.com.zupacademy.rodrigo.casadocodigo.domain.model.*;
 import br.com.zupacademy.rodrigo.casadocodigo.exception.type.RegisterNotFoundException;
+import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.ExistsIdentifier;
 import br.com.zupacademy.rodrigo.casadocodigo.exception.validation.NotDuplicate;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.AutorRepository;
 import br.com.zupacademy.rodrigo.casadocodigo.repository.CategoriaRepository;
@@ -21,9 +22,11 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 public class LivroRequestDTO {
 
     @NotNull
+    @ExistsIdentifier(message = "não há registro de autor com esse id", fieldName = "id", domainClass = Autor.class)
     private Integer autorId;
 
     @NotNull
+    @ExistsIdentifier(message = "não há registro de categoria com esse id", fieldName = "id", domainClass = Estado.class)
     private Integer categoriaId;
 
     @NotBlank
@@ -64,13 +67,17 @@ public class LivroRequestDTO {
     }
 
     public Livro toModel(AutorRepository autorRepository, CategoriaRepository categoriaRepository) {
-        var autor = autorRepository
-                .findById(autorId).orElseThrow(() -> new RegisterNotFoundException("autorId", String.format("não há " +
-                        "registro de autor com id '%d'", autorId)));
-        var categoria = categoriaRepository
-                .findById(categoriaId).orElseThrow(() -> new RegisterNotFoundException("categoriaId", String.format(
-                        "não há registro de categoria com id '%d'", categoriaId)));
+        var autor = buscaAutor(autorRepository);
+        var categoria = buscaCategoria(categoriaRepository);
 
         return new Livro(titulo, resumo, sumario, preco, numeroDePaginas, isbn, dataLancamento, categoria, autor);
+    }
+
+    private Autor buscaAutor(AutorRepository autorRepository) {
+        return autorRepository.findById(autorId).get();
+    }
+
+    private Categoria buscaCategoria(CategoriaRepository categoriaRepository) {
+        return categoriaRepository.findById(categoriaId).get();
     }
 }
